@@ -17,6 +17,18 @@
  * either express or implied.
  */
 
+//Myth Thrazz Multiple Stat-Scenes
+document.getElementsByClassName = function(cl) {
+var retnode = [];
+var myclass = new RegExp('\\b'+cl+'\\b');
+var elem = this.getElementsByTagName('*');
+for (var i = 0; i < elem.length; i++) {
+var classes = elem[i].className;
+if (myclass.test(classes)) retnode.push(elem[i]);
+}
+return retnode;
+};
+//Myth Thrazz
 
 function printx(msg, parent) {
     if (msg == null) return;
@@ -33,16 +45,25 @@ function println(msg, parent) {
     parent.appendChild(br);
 }
 
-
-function showStats() {
+function showStats(stats_id) { 
+	var stat_file = statcharts[stats_id]; 
+    if(!stat_file) 
+    { 
+    	alert("stat_scene with id of: "+stats_id+" is undefined, check 'statcharts' variable");
+    	return false; 
+    }
+    
     if (window.showingStatsAlready) return;
     window.showingStatsAlready = true;
-    document.getElementById("statsButton").style.display = "none";
+    buttons = document.getElementsByClassName("statsButton");
+    for (i = 0; i < buttons.length; i++){
+        buttons[i].style.display = 'none';
+    }
     main.innerHTML = "<div id='text'></div>";
     
     var currentScene = window.stats.scene;
-    
-    var scene = new Scene("choicescript_stats", window.stats, this.nav);
+
+    var scene = new Scene(stat_file, window.stats, this.nav);
     scene.save = function() {}; // Don't save state in stats screen, issue #70
     // TODO ban *choice/*page_break/etc. in stats screen
     scene.finish = function(buttonName) {
@@ -54,7 +75,9 @@ function showStats() {
       restartLink.onclick = function() {
           if (window.confirm("Restart your game?  Did you click that intentionally?")) {
               window.showingStatsAlready = false;
-              document.getElementById("statsButton").style.display = "inline";
+              for (i = 0; i < buttons.length; i++){
+                  buttons[i].style.display = 'inline';
+              }
               clearCookie();
               window.nav.resetStats(window.stats);
               clearScreen(restoreGame);
@@ -69,7 +92,10 @@ function showStats() {
       printButton(buttonName || "Next", text, false, function() {
           window.stats.scene = currentScene;
           window.showingStatsAlready = false;
-          document.getElementById("statsButton").style.display = "inline";
+
+          for (i = 0; i < buttons.length; i++){
+              buttons[i].style.display = 'inline';
+          }
           clearScreen(loadAndRestoreGame);
       });
     }
