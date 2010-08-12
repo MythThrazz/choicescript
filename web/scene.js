@@ -19,11 +19,13 @@
 function Scene(name, stats, nav, debugMode) {
     if (!name) name = "";
     if (!stats) stats = {};
+    if (!statcharts) statcharts = {}; //Multiple Stats-Scenes
     // the name of the scene
     this.name = name;
     
     // the permanent statistics and the temporary values
     this.stats = stats;
+    this.statcharts = statcharts; //Multiple Stats-Scenes
     this.temps = {};
     
     // the navigator determines which scene comes next
