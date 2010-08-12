@@ -29,6 +29,12 @@ nav = new SceneNavigator([
     
 ]);
 
+//Specify the list of stat-scenes , separated by commas, with no final comma
+statcharts = {
+		1:"choicescript_stats"
+		,2:"stats2"
+};
+
 // Specify the default starting stats here
 
 stats = {
