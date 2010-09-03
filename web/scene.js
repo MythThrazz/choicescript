@@ -1577,12 +1577,13 @@ Scene.tokens = [
     ,{name:"BOOLEAN_OPERATOR", test:function(str){ return Scene.regexpMatch(str,/^(and|or)\b/); } }
     ,{name:"VAR", test:function(str){ return Scene.regexpMatch(str,/^[a-zA-Z]\w*/); } }
     ,{name:"FAIRMATH", test:function(str){ return Scene.regexpMatch(str,/^%[\+\-]/); } }
-    ,{name:"OPERATOR", test:function(str){ return Scene.regexpMatch(str,/^[\+\-\*\/\&]/); } }
+    ,{name:"OPERATOR", test:function(str){ return Scene.regexpMatch(str,/^[\+\-\*\/\&\#]/); } }
     ,{name:"INEQUALITY", test:function(str){ return Scene.regexpMatch(str,/^[\!\<\>]\=?/); } }
     ,{name:"EQUALITY", test:function(str){ return Scene.regexpMatch(str,/^=/); } }
 ];
 Scene.operators = {
     "+": function add(v1,v2) { return num(v1) + num(v2); }
+    ,"#": function round(v1,v2) { return Math.round(num(v1)) + Math.round(num(v2)); }
     ,"-": function subtract(v1,v2) { return num(v1) - num(v2); }
     ,"*": function multiply(v1,v2) { return num(v1) * num(v2); }
     ,"/": function divide(v1,v2) { return num(v1) / num(v2); }
